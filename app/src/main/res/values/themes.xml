@@ -2,4 +2,5 @@
 <resources>
 
     <style name="Theme.Mobil" parent="android:Theme.Material.Light.NoActionBar" />
+    <item name="android:windowIsTranslucent">true</item>
 </resources>

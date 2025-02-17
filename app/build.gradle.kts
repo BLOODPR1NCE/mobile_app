@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.compose.compiler)
+    kotlin("plugin.serialization") version "2.1.0"
 }
 
 android {
@@ -59,6 +61,8 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.play.services.auth)
+    implementation(libs.androidx.navigation.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -66,4 +70,21 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+
+//Navigation
+    implementation (libs.androidx.navigation.compose)
+    //Supabase
+    implementation(platform(libs.bom))
+    implementation(libs.postgrest.kt)
+    implementation(libs.auth.kt)
+    implementation(libs.realtime.kt)
+
+//Ktor
+    implementation(libs.ktor.client.android)
+
+//ViewModel
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 }
+
+

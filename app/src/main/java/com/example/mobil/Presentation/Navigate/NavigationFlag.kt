@@ -9,33 +9,36 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import java.lang.reflect.Modifier
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.compose.composable
 
 @Composable
-fun Navigation() {
-    val NavigationFlag = rememberNavigationFlag()
+fun NavHost(navController: NavHostController, startDestination: String, function: () -> Unit) {
+    val navController = rememberNavController()
     Surface(color = MaterialTheme.colorScheme.background) {
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize()
         ) {
-            Navigation(NavigationFlag = NavigationFlag, startDestination = Routes.Load) {
+            NavHost(navController = navController, startDestination = Routes.Load) {
                 composable(Routes.Load)
                 {
-                    SplashScreen(NavigationFlag)
+                    Load(navController)
                 }
                 composable(Routes.SignIn)
                 {
-                    SignInScreen(NavigationFlag)
+                    SignIn(navController)
                 }
                 composable(Routes.SignUn)
                 {
-                    SignUpScreen(NavigationFlag)
+                    SignUp(navController)
                 }
                 composable(Routes.Home)
                 {
-                    MainScreen(NavigationFlag)
+                    Home(navController)
                 }
             }
         }
