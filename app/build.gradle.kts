@@ -63,6 +63,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.play.services.auth)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.material3.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -75,13 +76,13 @@ dependencies {
 //Navigation
     implementation (libs.androidx.navigation.compose)
     //Supabase
-    implementation(platform(libs.bom))
-    implementation(libs.postgrest.kt)
+    implementation(platform("io.github.jan-tennert.supabase:bom:3.1.1"))
+    implementation("io.github.jan-tennert.supabase:postgrest-kt")
     implementation(libs.auth.kt)
     implementation(libs.realtime.kt)
 
 //Ktor
-    implementation(libs.ktor.client.android)
+    implementation("io.ktor:ktor-client-android:3.1.0")
 
 //ViewModel
     implementation(libs.androidx.lifecycle.viewmodel.compose)

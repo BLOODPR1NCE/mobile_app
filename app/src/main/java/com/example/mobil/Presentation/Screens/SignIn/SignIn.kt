@@ -13,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.key.Key.Companion.R
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,52 +22,48 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.mobil.Domain.Сondition.ResultCondition
 import com.example.mobil.Presentation.Navigate.Routes
+import com.example.mobil.Presentation.Screens.Details.ButtonNavigate
 import com.example.mobil.Presentation.Screens.Details.TextEmail
 import com.example.mobil.Presentation.Screens.Details.TextPassword
-import com.example.mobil.R
-import com.example.supabasesimpleproject.Domain.State.ResultState
-import com.example.supabasesimpleproject.R
-import com.example.supabasesimpleproject.Presentation.Screens.Components.ButtonNavigation
-import com.example.supabasesimpleproject.Presentation.Screens.Components.TextFieldPassword
-import com.example.supabasesimpleproject.Presentation.Screens.Components.TextFieldEmail
-import com.example.supabasesimpleproject.Presentation.Navigation.NavigationRoutes
+
 
 @Composable
 fun SignInScreen(navController: NavHostController, signInViewModel: SignInViewModel = viewModel()) {
 
-    val resultState by signInViewModel.resultState.collectAsState()
-    val uiState = signInViewModel.uiState
+    val resultState by signInViewModel.resultCondition.collectAsState()
+    val uiState = signInViewModel.uiCondition
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         TextEmail(value = uiState.email, error = uiState.errorEmail,
-            onvaluechange = { it -> signInViewModel.updateState(uiState.copy(email = it)) })
+            onvaluechange = { it -> signInViewModel.UpdateCondition(uiState.copy(email = it)) })
         Spacer(Modifier.height(10.dp))
         TextPassword(uiState.password) {
-            signInViewModel.updateState(uiState.copy(password = it))
+            signInViewModel.UpdateCondition(uiState.copy(password = it))
         }
         Spacer(Modifier.height(10.dp))
 
         when (resultState) {
-            is ResultState.Error -> {
-                ButtonNavigation(stringResource(R.string.name)) {
-                    signInViewModel.signIn().toString()
+            is ResultCondition.Error -> {
+                ButtonNavigate(stringResource(R.string.name)) {
+                    signInViewModel.SignIn().toString()
 
                 }
-                Text((resultState as ResultState.Error).message)
+                Text((resultState as ResultCondition.Error).message)
             }
-            is ResultState.Initialized -> {
-                ButtonNavigation(stringResource(R.string.name)) {
-                    signInViewModel.signIn().toString()
+            is ResultCondition.Init -> {
+                ButtonNavigate(stringResource(R.string.name)) {
+                    signInViewModel.SignIn().toString()
                 }
             }
-            ResultState.Loading -> {
+            ResultCondition.Loading -> {
                 CircularProgressIndicator()
             }
-            is ResultState.Success -> {
+            is ResultCondition.Success -> {
                 navController.navigate(Routes.Home)
                 {
                     popUpTo(Routes.SignIn) {
@@ -78,7 +75,7 @@ fun SignInScreen(navController: NavHostController, signInViewModel: SignInViewMo
 
         Text(
             "Создать аккаунт",
-            fontSize = 14.sp,
+            fontSize = 15.sp,
             color = Color.Black,
             fontWeight = FontWeight.W600,
             modifier = Modifier.clickable {
