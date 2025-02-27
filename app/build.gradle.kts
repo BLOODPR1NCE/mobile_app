@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.application) version "8.6.0"
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
     kotlin("plugin.serialization") version "2.1.0"
@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "com.example.mobil"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.mobil"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -73,19 +73,13 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
 
-//Navigation
-    implementation (libs.androidx.navigation.compose)
-    //Supabase
+    implementation("androidx.navigation:navigation-compose:2.7.7")
     implementation(platform("io.github.jan-tennert.supabase:bom:3.1.1"))
-    implementation("io.github.jan-tennert.supabase:postgrest-kt")
-    implementation(libs.auth.kt)
-    implementation(libs.realtime.kt)
+    implementation("io.github.jan-tennert.supabase:postgrest-kt:3.1.1")
+    implementation ("io.github.jan-tennert.supabase:auth-kt:3.1.1")
+    implementation ("io.github.jan-tennert.supabase:realtime-kt:3.1.1")
+    implementation("io.ktor:ktor-client-android:3.0.2")
 
-//Ktor
-    implementation("io.ktor:ktor-client-android:3.1.0")
-
-//ViewModel
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
 }
 
 

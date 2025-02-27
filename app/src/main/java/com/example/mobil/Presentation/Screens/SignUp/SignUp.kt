@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -18,7 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.mobil.Domain.Сondition.ResultCondition
 import com.example.mobil.Presentation.Navigate.Routes
@@ -30,9 +31,9 @@ import java.util.Calendar
 import java.util.Date
 
 @Composable
-fun SignUpScreen(navController: NavHostController, signUpViewModel: SignUpViewModel = ViewModel()) {
+fun SignUpScreen(navController: NavHostController, signUpViewModel: SignUpViewModel = viewModel()) {
 
-    val uiState = SignUpViewModel.uiState
+    val uiState = signUpViewModel.uiState
     val mContext = LocalContext.current
     val mYear: Int
     val mMonth: Int
@@ -54,7 +55,7 @@ fun SignUpScreen(navController: NavHostController, signUpViewModel: SignUpViewMo
         verticalArrangement = Arrangement.Center
     ) {
 
-        TextEmail(uiState.email,uiState.isEmailError) { signUpViewModel.UpdateState(uiState.copy(email = it)) }
+        TextEmail(uiState.email,uiState.EmailError) { signUpViewModel.UpdateState(uiState.copy(email = it)) }
         Spacer(Modifier.height(10.dp))
 
         TextDefault(uiState.username) { signUpViewModel.UpdateState(uiState.copy(username = it)) }
@@ -66,7 +67,7 @@ fun SignUpScreen(navController: NavHostController, signUpViewModel: SignUpViewMo
         TextPassword(uiState.password) { signUpViewModel.UpdateState(uiState.copy(password = it)) }
         Spacer(Modifier.height(10.dp))
 
-        TextPassword(uiState.confirmPassword) { signUpViewModel.UpdateState(uiState.copy(confirmPassword = it)) }
+        TextPassword(uiState.repeatPassword) { signUpViewModel.UpdateState(uiState.copy(repeatPassword = it)) }
         Spacer(Modifier.height(10.dp))
 
         val mDatePickerDialog = DatePickerDialog(
@@ -96,10 +97,12 @@ fun SignUpScreen(navController: NavHostController, signUpViewModel: SignUpViewMo
                 CircularProgressIndicator()
             }
             is ResultCondition.Success -> {
-                navController.navigate(Routes.Home)
-                {
-                    popUpTo(Routes.SignIn) {
-                        inclusive = true
+                LaunchedEffect(Unit) {
+                    navController.navigate(Routes.SignIn)
+                    {
+                        popUpTo(Routes.SignUn) {
+                            inclusive = true
+                        }
                     }
                 }
             }

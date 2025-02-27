@@ -5,16 +5,16 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.key.Key.Companion.R
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,59 +28,78 @@ import com.example.mobil.Presentation.Screens.Details.ButtonNavigate
 import com.example.mobil.Presentation.Screens.Details.TextEmail
 import com.example.mobil.Presentation.Screens.Details.TextPassword
 
-
 @Composable
 fun SignInScreen(navController: NavHostController, signInViewModel: SignInViewModel = viewModel()) {
-
     val resultState by signInViewModel.resultCondition.collectAsState()
     val uiState = signInViewModel.uiCondition
 
+    SignInForm(
+        email = uiState.email,
+        password = uiState.password,
+        errorEmail = uiState.errorEmail,
+        onEmailChange = { signInViewModel.UpdateCondition(uiState.copy(email = it)) },
+        onPasswordChange = { signInViewModel.UpdateCondition(uiState.copy(password = it)) },
+        onSignInClick = { signInViewModel.SignIn() },
+        isLoading = resultState is ResultCondition.Loading,
+        errorMessage = (resultState as? ResultCondition.Error)?.message,
+        onCreateAccountClick = { navController.navigate(Routes.SignUn) }
+    )
+
+    if (resultState is ResultCondition.Success) {
+        LaunchedEffect(Unit) {
+            navController.navigate(Routes.Home) {
+                popUpTo(Routes.SignIn) { inclusive = true }
+            }
+        }
+    }
+}
+
+@Composable
+fun SignInForm(
+    modifier: Modifier = Modifier,
+    email: String,
+    password: String,
+    errorEmail: Boolean,
+    onEmailChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
+    onSignInClick: () -> Unit,
+    isLoading: Boolean,
+    errorMessage: String?,
+    onCreateAccountClick: () -> Unit
+) {
     Column(
+        modifier = modifier.padding(15.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        TextEmail(value = uiState.email, error = uiState.errorEmail,
-            onvaluechange = { it -> signInViewModel.UpdateCondition(uiState.copy(email = it)) })
+        TextEmail(email, errorEmail, onEmailChange)
         Spacer(Modifier.height(10.dp))
-        TextPassword(uiState.password) {
-            signInViewModel.UpdateCondition(uiState.copy(password = it))
-        }
+        TextPassword(password, onPasswordChange)
         Spacer(Modifier.height(10.dp))
+        ButtonNavigate(
+            label = "Войти",
+            onClick = onSignInClick
+        )
 
-        when (resultState) {
-            is ResultCondition.Error -> {
-                ButtonNavigate(stringResource(R.string.name)) {
-                    signInViewModel.SignIn().toString()
-
-                }
-                Text((resultState as ResultCondition.Error).message)
-            }
-            is ResultCondition.Init -> {
-                ButtonNavigate(stringResource(R.string.name)) {
-                    signInViewModel.SignIn().toString()
-                }
-            }
-            ResultCondition.Loading -> {
-                CircularProgressIndicator()
-            }
-            is ResultCondition.Success -> {
-                navController.navigate(Routes.Home)
-                {
-                    popUpTo(Routes.SignIn) {
-                        inclusive = true
-                    }
-                }
-            }
+        errorMessage?.let {
+            Text(
+                text = it,
+                color = Color.Red,
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
         }
+
+        if (isLoading) {
+            CircularProgressIndicator(modifier = Modifier.padding(vertical = 8.dp))
+        }
+
 
         Text(
-            "Создать аккаунт",
-            fontSize = 15.sp,
+            text = "Создать аккаунт",
+            fontSize = 20.sp,
             color = Color.Black,
             fontWeight = FontWeight.W600,
-            modifier = Modifier.clickable {
-                navController.navigate(Routes.SignUn)
-            }
+            modifier = Modifier.clickable(onClick = onCreateAccountClick)
         )
     }
 }

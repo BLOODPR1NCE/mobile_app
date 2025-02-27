@@ -7,6 +7,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
@@ -20,6 +21,7 @@ import com.example.mobil.R
 fun TextDefault(value: String, onvaluechange: (String) -> Unit) {
     androidx.compose.material3.TextField(
         value = value,
+        textStyle = MaterialTheme.typography.displayMedium,
         onValueChange = {
             onvaluechange(it)
         },
@@ -36,7 +38,7 @@ fun TextDefault(value: String, onvaluechange: (String) -> Unit) {
 }
 
 @Composable
-fun TextEmail(value: String, error:Boolean, onvaluechange: (String) -> Unit) {
+fun TextEmail(value: String, error: Boolean, onvaluechange: (String) -> Unit) {
     androidx.compose.material3.TextField(
         value = value,
         textStyle = MaterialTheme.typography.displayMedium,

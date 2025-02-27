@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 data class Profile (
     val username:String,
     val surname:String,
-    @SerialName("datebirth") //Аннотация указывает, что при сериализации/десериализации это свойство должно соответствовать ключу "datebirth" в формате данных (например, JSON)
+    @SerialName("datebirth")
     val dateBirth:String?,
     val image:String?
 )

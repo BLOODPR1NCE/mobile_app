@@ -1,7 +1,6 @@
 package com.example.mobil.Presentation.Screens.SignUp
 
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.text.input.KeyboardType.Companion.Email
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mobil.Domain.Constant.supabase
@@ -9,6 +8,11 @@ import com.example.mobil.Domain.Models.Profile
 import com.example.mobil.Domain.Utils.EmailValid
 import com.example.mobil.Domain.Сondition.ResultCondition
 import com.example.mobil.Domain.Сondition.SignUpCondititon
+import com.example.mobil.Presentation.Navigate.Routes
+import io.github.jan.supabase.auth.auth
+import io.github.jan.supabase.auth.exception.AuthRestException
+import io.github.jan.supabase.auth.providers.builtin.Email
+import io.github.jan.supabase.postgrest.from
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -33,7 +37,7 @@ class SignUpViewModel: ViewModel() {
         if (_uiState.value.EmailError && _uiState.value.password== _uiState.value.repeatPassword) {
             viewModelScope.launch {
                 try {
-                    supabase.auth.SignUpWith(Email)
+                    supabase.auth.signUpWith(Email)
                     {
                         email = _uiState.value.email
                         password = _uiState.value.password

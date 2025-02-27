@@ -44,7 +44,7 @@ fun Loading(navController: NavHostController) {
             )
         )
         delay(2000L)
-        navController.navigate(Routes.SignUn) {
+        navController.navigate(Routes.SignIn) {
             popUpTo(Routes.Load) {
                 inclusive = true
             }

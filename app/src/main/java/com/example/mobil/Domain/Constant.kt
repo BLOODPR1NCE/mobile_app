@@ -1,7 +1,5 @@
 package com.example.mobil.Domain
 
-import android.net.http.HttpResponseCache.install
-import com.google.android.gms.auth.api.Auth
 import io.github.jan.supabase.auth.Auth
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.postgrest.Postgrest

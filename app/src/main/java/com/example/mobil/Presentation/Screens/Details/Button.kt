@@ -32,9 +32,9 @@ fun ButtonNavigate(label: String, onClick:()-> Unit, )
     ) {
         Text(
             label,
-            fontSize = 15.sp,
+            fontSize = 20.sp,
             color = Color.White,
-            fontWeight = FontWeight.W300
+            fontWeight = FontWeight.W500
         )
     }
 }
