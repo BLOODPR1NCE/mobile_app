@@ -15,8 +15,6 @@ import io.github.jan.supabase.supabaseJson
 @Composable
 fun Home(navController: NavController) {
     val _uiState = mutableStateOf(SignUpCondititon())
-    supabase.from("profile").select(user)
-    supabase.auth.
     Text (
         text = "Привет"
     )

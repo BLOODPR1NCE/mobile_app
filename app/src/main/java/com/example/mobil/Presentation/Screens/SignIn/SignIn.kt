@@ -97,7 +97,7 @@ fun SignInForm(
         Text(
             text = "Создать аккаунт",
             fontSize = 20.sp,
-            color = Color.Black,
+            color = Color.White,
             fontWeight = FontWeight.W600,
             modifier = Modifier.clickable(onClick = onCreateAccountClick)
         )

@@ -8,7 +8,6 @@ import com.example.mobil.Domain.Models.Profile
 import com.example.mobil.Domain.Utils.EmailValid
 import com.example.mobil.Domain.Сondition.ResultCondition
 import com.example.mobil.Domain.Сondition.SignUpCondititon
-import com.example.mobil.Presentation.Navigate.Routes
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.auth.exception.AuthRestException
 import io.github.jan.supabase.auth.providers.builtin.Email
@@ -45,7 +44,7 @@ class SignUpViewModel: ViewModel() {
                     val user = Profile(_uiState.value.username,
                         _uiState.value.surname,
                         _uiState.value.dateBirth, null)
-                    supabase.from("profile").insert(user)
+                    supabase.from("Profile").insert(user)
                     _resultState.value = ResultCondition.Success("Success")
                 } catch (_ex: AuthRestException) {
 
