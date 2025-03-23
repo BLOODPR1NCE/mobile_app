@@ -64,6 +64,7 @@ dependencies {
     implementation(libs.play.services.auth)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.material3.android)
+    implementation(libs.androidx.storage)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -80,6 +81,10 @@ dependencies {
     implementation ("io.github.jan-tennert.supabase:realtime-kt:3.1.1")
     implementation("io.ktor:ktor-client-android:3.0.2")
 
+    implementation("io.github.jan-tennert.supabase:storage-kt:3.1.3")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.0")
+    implementation("androidx.compose.runtime:runtime-livedata:1.7.8")
+    implementation("io.coil-kt:coil-compose:2.6.0")
 }
 
 
