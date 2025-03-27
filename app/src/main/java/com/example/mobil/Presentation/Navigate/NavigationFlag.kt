@@ -11,6 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.composable
+import com.example.mobil.Presentation.Navigate.Routes.Home
+import com.example.mobil.Presentation.Screens.Home.HomeScreen
 import com.example.mobil.Presentation.Screens.Load.Loading
 import com.example.mobil.Presentation.Screens.SignIn.SignInScreen
 import com.example.mobil.Presentation.Screens.SignUp.SignUpScreen
