@@ -41,7 +41,7 @@ class HomeViewModel : ViewModel() {
         _resultCondition.value = ResultCondition.Loading
         viewModelScope.launch {
             try {
-                allBooks = supabase.postgrest.from("books").select().decodeList<Book>()
+                allBooks = supabase.postgrest.from("Book").select().decodeList<Book>()
                 _books.value = allBooks
                 Log.d("MainBooks", "Success")
                 Log.d("MainBooks", allBooks.toString())

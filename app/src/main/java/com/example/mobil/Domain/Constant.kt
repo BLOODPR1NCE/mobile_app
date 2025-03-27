@@ -3,6 +3,7 @@ package com.example.mobil.Domain
 import io.github.jan.supabase.auth.Auth
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.postgrest.Postgrest
+import io.github.jan.supabase.storage.Storage
 
 object Constant {
     val supabase = createSupabaseClient(
@@ -11,5 +12,6 @@ object Constant {
     ) {
         install(Postgrest)
         install(Auth)
+        install(Storage)
     }
 }
