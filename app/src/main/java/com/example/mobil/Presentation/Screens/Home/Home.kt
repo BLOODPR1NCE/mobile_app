@@ -25,7 +25,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.example.mobil.Domain.Models.Book
 import com.example.mobil.Domain.Сondition.ResultCondition
+import com.example.mobil.Presentation.Navigate.Routes
 import com.example.mobil.Presentation.Screens.Details.Books
 import com.example.mobil.Presentation.Screens.Details.CategoryUnit
 import com.example.mobil.Presentation.Screens.Details.TextSearch
@@ -85,11 +87,14 @@ fun HomeScreen(navController: NavHostController, homeViewModel: HomeViewModel = 
                 }
                 LazyColumn {
                     items(books.value) { it ->
-                        Books(book = it) {
-                            runBlocking {
-                                homeViewModel.getUrlImage(it)
+                        Books(book = it, getUrl = {
+                            runBlocking { // Запускаем блокирующий код
+                                homeViewModel.getUrlImage(it) // Получаем URL изображения для книги
                             }
+                        }, onClick = {
+                            navController.navigate(Routes.DetailsBook + "/" + it.id) //Создаем маршрутизацию
                         }
+                        )
                     }
                 }
             }

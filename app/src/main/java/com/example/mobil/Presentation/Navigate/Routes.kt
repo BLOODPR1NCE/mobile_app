@@ -5,4 +5,5 @@ object Routes {
     const val SignUn = "signun"
     const val Load = "load"
     const val Home = "home"
+    const val DetailsBook ="detailsbook"
 }

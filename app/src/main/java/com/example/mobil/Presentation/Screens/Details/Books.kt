@@ -1,6 +1,7 @@
 package com.example.mobil.Presentation.Screens.Details
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -36,13 +37,16 @@ import com.example.mobil.Domain.Models.Book
 import com.example.mobil.R
 
 @Composable
-fun Books(book: Book, getUrl: (String) -> String) {
+fun Books(book: Book, getUrl: (String) -> String, onClick:()->Unit) {
     var imageUrl by remember { mutableStateOf("") }
 
     Card(
         modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth()
+            .clickable {
+                onClick()
+            }
     ) {
         Row(
             modifier = Modifier.padding(16.dp),

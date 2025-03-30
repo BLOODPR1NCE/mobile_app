@@ -1,5 +1,6 @@
 package com.example.mobil.Presentation.Navigate
 
+import android.os.Build
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,10 +9,12 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.composable
-import com.example.mobil.Presentation.Navigate.Routes.Home
+import androidx.navigation.navArgument
+import com.example.mobil.Presentation.Screens.DetailScreen.DetailsBookScreen
 import com.example.mobil.Presentation.Screens.Home.HomeScreen
 import com.example.mobil.Presentation.Screens.Load.Loading
 import com.example.mobil.Presentation.Screens.SignIn.SignInScreen
@@ -41,6 +44,17 @@ fun MainNavHost() {
                 }
                 composable(Routes.Home) {
                     HomeScreen(navController)
+                }
+                composable(
+                    route = Routes.DetailsBook + "/{id}",
+                    arguments = listOf(navArgument("id") {
+                        type = NavType.StringType
+                    })
+                ) {
+                    val id = it.arguments?.getString("id")
+                    if (id != null) {
+                        DetailsBookScreen(navController, id)
+                    }
                 }
             }
         }

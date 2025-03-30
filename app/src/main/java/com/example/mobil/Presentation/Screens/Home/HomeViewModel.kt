@@ -60,7 +60,7 @@ class HomeViewModel : ViewModel() {
     suspend fun getUrlImage(bookName: String): String {
         return withContext(Dispatchers.IO) {
             try {
-                val url = supabase.storage.from("Books").publicUrl("${bookName}.png")
+                val url = supabase.storage.from("Book").publicUrl("${bookName}.png")
                 Log.d("buck", url)
                 url
             } catch (ex: AuthRestException) {
@@ -73,7 +73,7 @@ class HomeViewModel : ViewModel() {
     private fun loadCategories() {
         viewModelScope.launch {
             try {
-                _categories.value = supabase.postgrest.from("categories").select().decodeList<Category>()
+                _categories.value = supabase.postgrest.from("Category").select().decodeList<Category>()
                 Log.d("MainCategories", "Success")
                 Log.d("MainCategories", _categories.toString())
 
