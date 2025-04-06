@@ -1,5 +1,6 @@
 package com.example.mobil.Presentation.Screens.SignIn
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,8 +15,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -27,6 +33,7 @@ import com.example.mobil.Presentation.Navigate.Routes
 import com.example.mobil.Presentation.Screens.Details.ButtonNavigate
 import com.example.mobil.Presentation.Screens.Details.TextEmail
 import com.example.mobil.Presentation.Screens.Details.TextPassword
+import com.example.mobil.R
 
 @Composable
 fun SignInScreen(navController: NavHostController, signInViewModel: SignInViewModel = viewModel()) {
@@ -65,16 +72,31 @@ fun SignInForm(
     onSignInClick: () -> Unit,
     isLoading: Boolean,
     errorMessage: String?,
-    onCreateAccountClick: () -> Unit
+    onCreateAccountClick: () -> Unit,
 ) {
     Column(
         modifier = modifier.padding(15.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        TextEmail(email, errorEmail, onEmailChange)
+        Image(
+            painter = painterResource(id = R.drawable.icon),
+            contentDescription = "Logotip",
+            modifier = Modifier
+                .size(200.dp)
+                .padding(bottom = 24.dp)
+        )
+        Text(
+                "АВТОРИЗАЦИЯ",
+            fontSize = 30.sp,
+            color = Color.White,
+            fontWeight = FontWeight.W600,
+        )
         Spacer(Modifier.height(10.dp))
-        TextPassword(password, onPasswordChange)
+
+        TextEmail(email, "Логин","Введите логин", errorEmail, onEmailChange)
+        Spacer(Modifier.height(10.dp))
+        TextPassword(password, "Пароль","Введите пароль", onPasswordChange)
         Spacer(Modifier.height(10.dp))
         ButtonNavigate(
             label = "Войти",

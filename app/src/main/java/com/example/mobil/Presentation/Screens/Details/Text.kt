@@ -2,6 +2,7 @@ package com.example.mobil.Presentation.Screens.Details
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -32,19 +33,21 @@ import androidx.compose.ui.unit.sp
 import com.example.mobil.R
 
 @Composable
-fun TextDefault(value: String, onvaluechange: (String) -> Unit) {
+fun TextDefault(value: String, label: String = "", placeholder: String = "", onvaluechange: (String) -> Unit) {
     val focusManager = LocalFocusManager.current
     androidx.compose.material3.TextField(
         value = value,
         textStyle = MaterialTheme.typography.displayMedium,
+        label = { Text(label) },
+        placeholder = { Text(placeholder) },
         onValueChange = {
             onvaluechange(it)
         },
         colors = TextFieldDefaults.colors(
-            unfocusedContainerColor = Color.LightGray,
-            unfocusedTextColor = Color.Black,
-            unfocusedIndicatorColor = Color.Transparent,
-            focusedTextColor = Color.Black,
+            unfocusedContainerColor = Color.DarkGray,
+            unfocusedTextColor = Color.White,
+            unfocusedIndicatorColor = Color.DarkGray,
+            focusedTextColor = Color.White,
             focusedContainerColor = Color.DarkGray,
             focusedIndicatorColor = Color.Transparent
         ),
@@ -57,7 +60,7 @@ fun TextDefault(value: String, onvaluechange: (String) -> Unit) {
 }
 
 @Composable
-fun TextEmail(value: String, error: Boolean, onvaluechange: (String) -> Unit) {
+fun TextEmail(value: String, label: String = "", placeholder: String = "",  error: Boolean, onvaluechange: (String) -> Unit) {
     val focusManager = LocalFocusManager.current
     androidx.compose.material3.TextField(
         value = value,
@@ -65,12 +68,14 @@ fun TextEmail(value: String, error: Boolean, onvaluechange: (String) -> Unit) {
         onValueChange = {
             onvaluechange(it)
         },
+        label = { Text(label) },
+        placeholder = { Text(placeholder) },
         isError = !error,
         colors = TextFieldDefaults.colors(
-            unfocusedContainerColor =  Color.LightGray,
-            unfocusedTextColor = Color.Black,
+            unfocusedContainerColor =  Color.DarkGray,
+            unfocusedTextColor = Color.White,
             focusedContainerColor =  Color.DarkGray,
-            focusedTextColor = Color.Black,
+            focusedTextColor = Color.White,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent,
@@ -88,11 +93,13 @@ fun TextEmail(value: String, error: Boolean, onvaluechange: (String) -> Unit) {
 }
 
 @Composable
-fun TextPassword(value: String, onvaluechange: (String) -> Unit) {
+fun TextPassword(value: String, label: String = "", placeholder: String = "", onvaluechange: (String) -> Unit) {
     val focusManager = LocalFocusManager.current
     var passwordVisibility by remember { mutableStateOf(false) }
     androidx.compose.material3.TextField(
         value = value,
+        label = { Text(label) },
+        placeholder = { Text(placeholder) },
         visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
         trailingIcon = {
             IconButton(onClick = {
@@ -113,13 +120,14 @@ fun TextPassword(value: String, onvaluechange: (String) -> Unit) {
         },
         onValueChange = { onvaluechange(it) },
         colors = TextFieldDefaults.colors(
-            unfocusedContainerColor = Color.LightGray,
-            unfocusedTextColor = Color.Black,
+            unfocusedContainerColor = Color.DarkGray,
+            unfocusedTextColor = Color.White,
             focusedContainerColor = Color.DarkGray,
-            focusedTextColor = Color.Black,
+            focusedTextColor = Color.White,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent
+            disabledIndicatorColor = Color.Transparent,
+            errorPlaceholderColor = Color.Red
         ),
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Password,
@@ -139,7 +147,9 @@ fun TextSearch(value: String, onvaluechange: (String) -> Unit) {
         leadingIcon = {
             Icon(
                 painter = painterResource(id = R.drawable.search),
-                contentDescription = ""
+                contentDescription = "",
+                modifier = Modifier
+                        .size(20.dp)
             )
         },
         onValueChange = { onvaluechange(it) },
@@ -169,20 +179,22 @@ fun TextSearch(value: String, onvaluechange: (String) -> Unit) {
 }
 
 @Composable
-fun TextEdit(value: String, onValueChanged: (String) -> Unit) {
+fun TextEdit(value: String, label: String = "", placeholder: String = "", onValueChanged: (String) -> Unit) {
     val focusManager = LocalFocusManager.current
     androidx.compose.material3.TextField(
         value = value,
         textStyle = MaterialTheme.typography.displayMedium,
+        label = { Text(label) },
+        placeholder = { Text(placeholder) },
         onValueChange = {
             onValueChanged(it)
         },
         modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp),
         colors = TextFieldDefaults.colors(
-            unfocusedContainerColor = Color.LightGray,
-            unfocusedTextColor = Color.Black,
+            unfocusedContainerColor = Color.DarkGray,
+            unfocusedTextColor = Color.White,
             focusedContainerColor = Color.DarkGray,
-            focusedTextColor = Color.Black,
+            focusedTextColor = Color.White,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent
@@ -196,12 +208,14 @@ fun TextEdit(value: String, onValueChanged: (String) -> Unit) {
 }
 
 @Composable
-fun TextDropDown(value: String,onExpandedChange: (Boolean) -> Unit) {
+fun TextDropDown(value: String, label: String = "", placeholder: String = "", onExpandedChange: (Boolean) -> Unit) {
 
     val focusManager = LocalFocusManager.current
     androidx.compose.material3.TextField(
         value = value,
         textStyle = MaterialTheme.typography.displayMedium,
+        label = { Text(label) },
+        placeholder = { Text(placeholder) },
         onValueChange = {
 
         },
@@ -213,10 +227,10 @@ fun TextDropDown(value: String,onExpandedChange: (Boolean) -> Unit) {
         readOnly = true,
         modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp),
         colors = TextFieldDefaults.colors(
-            unfocusedContainerColor = Color.LightGray,
-            unfocusedTextColor = Color.Black,
+            unfocusedContainerColor = Color.DarkGray,
+            unfocusedTextColor = Color.White,
             focusedContainerColor = Color.DarkGray,
-            focusedTextColor = Color.Black,
+            focusedTextColor = Color.White,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent

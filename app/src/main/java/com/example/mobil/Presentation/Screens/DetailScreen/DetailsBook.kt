@@ -17,11 +17,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
@@ -86,12 +89,15 @@ fun DetailsBookScreen(
                             .padding(16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
+                        Spacer(modifier = Modifier.height(16.dp))
                         Text(
                             text = "Редактирование книги",
                             style = MaterialTheme.typography.headlineMedium,
-                            color = MaterialTheme.colorScheme.primary,
+                            color = Color.White,
                             modifier = Modifier.fillMaxWidth(),
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Center,
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.W600
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                         val imageState = rememberAsyncImagePainter(
@@ -143,87 +149,61 @@ fun DetailsBookScreen(
                         }
                         Spacer(modifier = Modifier.width(16.dp))
 
-
-                        Text(
-                            "Наименование книги:",
-                            textAlign = TextAlign.Left,
-                            style = MaterialTheme.typography.labelMedium
-                        )
-                        Spacer(modifier = Modifier.height(10.dp))
                         TextEdit(
                             value = bookState.title,
+                            label = "Название",
+                            placeholder = "Введите название книги",
                             onValueChanged = { viewModel.updateState(bookState.copy(title = it)) },
                         )
-                        Spacer(modifier = Modifier.height(8.dp))
                         var expanded by remember { mutableStateOf(false) }
                         val selectedCategory =
                             viewModel.categories.value?.find { it.id == bookState.category }
-                        Text(
-                            "Категория книги:",
-                            textAlign = TextAlign.Left,
-                            style = MaterialTheme.typography.labelMedium
-                        )
                         Spacer(modifier = Modifier.height(10.dp))
                         Box {
-                            // Создаем текстовое поле с выпадающим списком, где отображается имя выбранной категории
-                            TextDropDown(selectedCategory?.name ?: "Выберите категорию") {
-                                // Устанавливаем состояние expanded (развернуто/свернуто) в зависимости от переданного параметра
+                            TextDropDown(selectedCategory?.name ?: "Выберите категорию", "Категория", "Выберите категорию") {
                                 expanded = it
                             }
 
-                            // Создаем выпадающее меню
                             DropdownMenu(
-                                expanded = expanded, // Указываем, развернуто ли меню
-                                onDismissRequest = { expanded = false } // Закрываем меню при нажатии вне его
+                                expanded = expanded,
+                                onDismissRequest = { expanded = false }
                             ) {
-                                // Перебираем список категорий из viewModel
                                 viewModel.categories.value!!.forEach { category ->
-                                    // Создаем элемент выпадающего меню для каждой категории
                                     DropdownMenuItem(
-                                        text = { Text(category.name) }, // Отображаем имя категории
+                                        text = { Text(category.name) },
                                         onClick = {
-                                            // При нажатии на элемент устанавливаем выбранную категорию
                                             bookState.category = category.id
-                                            expanded = false // Закрываем меню
+                                            expanded = false
                                         }
                                     )
                                 }
                             }
                         }
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text(
-                            "Описание книги:",
-                            textAlign = TextAlign.Left,
-                            style = MaterialTheme.typography.labelMedium
-                        )
                         Spacer(modifier = Modifier.height(10.dp))
                         TextEdit(
                             value = bookState.description,
+                            label = "Описание",
+                            placeholder = "Введите описание книги",
                             onValueChanged = { viewModel.updateState(bookState.copy(description = it)) }
                         )
 
-                        Spacer(modifier = Modifier.height(8.dp))
-
-                        Text(
-                            "Жанр книги:",
-                            textAlign = TextAlign.Left,
-                            style = MaterialTheme.typography.labelMedium
-                        )
                         Spacer(modifier = Modifier.height(10.dp))
 
                         TextEdit(
                             value = bookState.genre,
+                            label = "Жанр",
+                            placeholder = "Введите жанр книги",
                             onValueChanged = { viewModel.updateState(bookState.copy(genre = it)) }
                         )
                         Spacer(modifier = Modifier.height(16.dp))
 
                         when (resultStateUpdate) {
                             is ResultCondition.Error -> {
-                                Toast.makeText(
-                                    context,
-                                    (resultStateUpload as ResultCondition.Error).message,
-                                    Toast.LENGTH_SHORT
-                                )
+                                    Toast.makeText(
+                                        context,
+                                        (resultStateUpload as ResultCondition.Error).message,
+                                        Toast.LENGTH_SHORT
+                                    )
                                 ButtonNavigate(
                                     label = "Сохранить изменения",
                                     onClick = {
@@ -314,6 +294,7 @@ fun DetailsBookScreen(
                                 }
                             }
                         }
+                        Spacer(modifier = Modifier.height(20.dp))
                     }
 
                 }

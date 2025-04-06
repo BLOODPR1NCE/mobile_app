@@ -1,6 +1,5 @@
 package com.example.mobil.Presentation.Screens.Home
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,7 +24,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.example.mobil.Domain.Models.Book
 import com.example.mobil.Domain.Сondition.ResultCondition
 import com.example.mobil.Presentation.Navigate.Routes
 import com.example.mobil.Presentation.Screens.Details.Books
@@ -88,11 +86,11 @@ fun HomeScreen(navController: NavHostController, homeViewModel: HomeViewModel = 
                 LazyColumn {
                     items(books.value) { it ->
                         Books(book = it, getUrl = {
-                            runBlocking { // Запускаем блокирующий код
-                                homeViewModel.getUrlImage(it) // Получаем URL изображения для книги
+                            runBlocking {
+                                homeViewModel.getUrlImage(it)
                             }
                         }, onClick = {
-                            navController.navigate(Routes.DetailsBook + "/" + it.id) //Создаем маршрутизацию
+                            navController.navigate(Routes.DetailsBook + "/" + it.id)
                         }
                         )
                     }

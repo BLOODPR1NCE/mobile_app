@@ -2,6 +2,7 @@ package com.example.mobil.Presentation.Screens.SignUp
 
 import android.app.DatePickerDialog
 import android.widget.DatePicker
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,7 +10,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -19,8 +23,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.mobil.Domain.Сondition.ResultCondition
@@ -29,6 +38,7 @@ import com.example.mobil.Presentation.Screens.Details.ButtonNavigate
 import com.example.mobil.Presentation.Screens.Details.TextDefault
 import com.example.mobil.Presentation.Screens.Details.TextEmail
 import com.example.mobil.Presentation.Screens.Details.TextPassword
+import com.example.mobil.R
 import java.util.Calendar
 import java.util.Date
 
@@ -48,9 +58,9 @@ fun SignUpScreen(navController: NavHostController, signUpViewModel: SignUpViewMo
 
     mCalendar.time = Date()
 
-    val mDate = remember { mutableStateOf("Выберите дату") }
+    val mDate = remember { mutableStateOf("Выберите дату рождения") }
 
-    val resultState by signUpViewModel.resultState.collectAsState() //Собирает значения из StateFlow в ViewModel, используя collectAsState() для синхронного доступа в Composable
+    val resultState by signUpViewModel.resultState.collectAsState()
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -59,20 +69,33 @@ fun SignUpScreen(navController: NavHostController, signUpViewModel: SignUpViewMo
             .fillMaxSize()
             .imePadding()
     ) {
-
-        TextEmail(uiState.email,uiState.EmailError) { signUpViewModel.UpdateState(uiState.copy(email = it)) }
+        Image(
+            painter = painterResource(id = R.drawable.icon),
+            contentDescription = "Logotip",
+            modifier = Modifier
+                .size(120.dp)
+                .padding(bottom = 24.dp)
+        )
+        Text(
+            "РЕГИСТРАЦИЯ",
+            fontSize = 30.sp,
+            color = Color.White,
+            fontWeight = FontWeight.W600,
+        )
+        Spacer(Modifier.height(10.dp))
+        TextEmail(uiState.email, "Логин","Введите логин",uiState.EmailError, { signUpViewModel.UpdateState(uiState.copy(email = it)) })
         Spacer(Modifier.height(10.dp))
 
-        TextDefault(uiState.username) { signUpViewModel.UpdateState(uiState.copy(username = it)) }
+        TextDefault(uiState.username, "Имя", "Введите имя", { signUpViewModel.UpdateState(uiState.copy(username = it)) })
         Spacer(Modifier.height(10.dp))
 
-        TextDefault(uiState.surname) { signUpViewModel.UpdateState(uiState.copy(surname = it)) }
+        TextDefault(uiState.surname, "Фамилия", "Введите фамилию", { signUpViewModel.UpdateState(uiState.copy(surname = it)) })
         Spacer(Modifier.height(10.dp))
 
-        TextPassword(uiState.password) { signUpViewModel.UpdateState(uiState.copy(password = it)) }
+        TextPassword(uiState.password, "Пароль","Введите пароль", { signUpViewModel.UpdateState(uiState.copy(password = it)) })
         Spacer(Modifier.height(10.dp))
 
-        TextPassword(uiState.repeatPassword) { signUpViewModel.UpdateState(uiState.copy(repeatPassword = it)) }
+        TextPassword(uiState.repeatPassword, "Повторный пароль","Введите пароль повторно",{ signUpViewModel.UpdateState(uiState.copy(repeatPassword = it)) })
         Spacer(Modifier.height(10.dp))
 
         val mDatePickerDialog = DatePickerDialog(

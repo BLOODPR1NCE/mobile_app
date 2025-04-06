@@ -25,7 +25,7 @@ class DetailsBookViewModel(id: String) : ViewModel() {
 
     var idBook = id
 
-    private val _resultStateUpdate = MutableStateFlow<ResultCondition>(ResultCondition.Loading)
+    private val _resultStateUpdate = MutableStateFlow<ResultCondition>(ResultCondition.Init)
     val resultStateUpdate: StateFlow<ResultCondition> = _resultStateUpdate.asStateFlow()
 
     private val _resultStateDelete = MutableStateFlow<ResultCondition>(ResultCondition.Init)
@@ -81,7 +81,7 @@ class DetailsBookViewModel(id: String) : ViewModel() {
         _resultStateUpdate.value = ResultCondition.Loading
         viewModelScope.launch {
             try {
-                supabase.postgrest.from("books").update(
+                supabase.postgrest.from("Book").update(
                     {
                         set("title", _state.value.title)
                         set("category_id", _state.value.category)
@@ -105,7 +105,7 @@ class DetailsBookViewModel(id: String) : ViewModel() {
         _resultStateDelete.value = ResultCondition.Loading
         viewModelScope.launch {
             try {
-                supabase.postgrest.from("books").delete(
+                supabase.postgrest.from("Book").delete(
                 ) {
                     filter {
                         eq("id", idBook)
@@ -124,7 +124,7 @@ class DetailsBookViewModel(id: String) : ViewModel() {
         viewModelScope.launch {
             try {
                 _categories.value =
-                    supabase.postgrest.from("categories").select().decodeList<Category>()
+                    supabase.postgrest.from("Category").select().decodeList<Category>()
                 Log.d("loadCategories", "Success")
                 Log.d("loadCategories", _categories.toString())
 
