@@ -57,10 +57,10 @@ class HomeViewModel : ViewModel() {
         }
     }
 
-    suspend fun getUrlImage(bookName: String): String {
+    suspend fun getUrlImage(bookName: Book): String {
         return withContext(Dispatchers.IO) {
             try {
-                val url = supabase.storage.from("Book").publicUrl("${bookName}.png")
+                val url = supabase.storage.from("book").publicUrl("${bookName.id}.png")
                 Log.d("buck", url)
                 url
             } catch (ex: AuthRestException) {

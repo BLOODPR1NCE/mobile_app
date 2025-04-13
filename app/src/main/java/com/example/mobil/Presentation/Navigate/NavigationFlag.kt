@@ -18,6 +18,7 @@ import com.example.mobil.Presentation.Screens.DetailScreen.DetailsBookScreen
 import com.example.mobil.Presentation.Screens.Home.HomeScreen
 import com.example.mobil.Presentation.Screens.Load.Loading
 import com.example.mobil.Presentation.Screens.SignIn.SignInScreen
+import com.example.mobil.Presentation.Screens.SignUp.CreateBookScreen
 import com.example.mobil.Presentation.Screens.SignUp.SignUpScreen
 
 @Composable
@@ -55,6 +56,9 @@ fun MainNavHost() {
                     if (id != null) {
                         DetailsBookScreen(navController, id)
                     }
+                }
+                composable(Routes.CreateBook) {
+                    CreateBookScreen(navController)
                 }
             }
         }

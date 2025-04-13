@@ -27,6 +27,7 @@ import androidx.navigation.NavHostController
 import com.example.mobil.Domain.Сondition.ResultCondition
 import com.example.mobil.Presentation.Navigate.Routes
 import com.example.mobil.Presentation.Screens.Details.Books
+import com.example.mobil.Presentation.Screens.Details.ButtonNavigate
 import com.example.mobil.Presentation.Screens.Details.CategoryUnit
 import com.example.mobil.Presentation.Screens.Details.TextSearch
 import kotlinx.coroutines.runBlocking
@@ -50,6 +51,12 @@ fun HomeScreen(navController: NavHostController, homeViewModel: HomeViewModel = 
             onvaluechange = { newText ->
                 textSearch.value = newText
                 homeViewModel.filterList(newText, selectedCategory.intValue)
+            }
+        )
+        ButtonNavigate(
+            label = "Добавить книгу",
+            onClick = {
+                navController.navigate(Routes.CreateBook)
             }
         )
         when (resultCondition) {
@@ -84,17 +91,19 @@ fun HomeScreen(navController: NavHostController, homeViewModel: HomeViewModel = 
                     }
                 }
                 LazyColumn {
-                    items(books.value) { it ->
-                        Books(book = it, getUrl = {
+                    items(books.value) { book ->
+                        Books(book = book, getUrl = {
                             runBlocking {
-                                homeViewModel.getUrlImage(it)
+                                homeViewModel.getUrlImage(book)
                             }
                         }, onClick = {
-                            navController.navigate(Routes.DetailsBook + "/" + it.id)
+                            navController.navigate(Routes.DetailsBook + "/" + book.id)
                         }
                         )
                     }
+
                 }
+
             }
         }
     }
