@@ -10,5 +10,5 @@ data class Book(
     @SerialName("category_id")
     val categoryId: Int,
     val description: String,
-    val genre: String,
+    val publication: String,
 )

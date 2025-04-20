@@ -90,6 +90,7 @@ fun DetailsBookScreen(
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         Spacer(modifier = Modifier.height(16.dp))
+
                         Text(
                             text = "Редактирование книги",
                             style = MaterialTheme.typography.headlineMedium,
@@ -99,7 +100,9 @@ fun DetailsBookScreen(
                             fontSize = 20.sp,
                             fontWeight = FontWeight.W600
                         )
+
                         Spacer(modifier = Modifier.height(16.dp))
+
                         val imageState = rememberAsyncImagePainter(
                             model = ImageRequest.Builder(LocalContext.current).data(imageUrl)
                                 .size(Size.ORIGINAL)
@@ -109,6 +112,7 @@ fun DetailsBookScreen(
                         LaunchedEffect(bookState) {
                             imageUrl = viewModel.getUrlImage(bookState.id)
                         }
+
                         if (imageState is AsyncImagePainter.State.Loading) {
                             Box(
                                 modifier = Modifier
@@ -119,6 +123,7 @@ fun DetailsBookScreen(
                                 CircularProgressIndicator()
                             }
                         }
+
                         if (imageState is AsyncImagePainter.State.Error) {
                             Image(
 
@@ -144,10 +149,12 @@ fun DetailsBookScreen(
                                         .size(200.dp)
                                         .clip(RoundedCornerShape(8.dp)),
                                     contentScale = ContentScale.Crop
+
                                 )
                             }
                         }
-                        Spacer(modifier = Modifier.width(16.dp))
+
+                        Spacer(modifier = Modifier.width(20.dp))
 
                         TextEdit(
                             value = bookState.title,
@@ -158,7 +165,9 @@ fun DetailsBookScreen(
                         var expanded by remember { mutableStateOf(false) }
                         val selectedCategory =
                             viewModel.categories.value?.find { it.id == bookState.category }
+
                         Spacer(modifier = Modifier.height(10.dp))
+
                         Box {
                             TextDropDown(selectedCategory?.name ?: "Выберите категорию", "Категория", "Выберите категорию") {
                                 expanded = it
@@ -179,7 +188,9 @@ fun DetailsBookScreen(
                                 }
                             }
                         }
+
                         Spacer(modifier = Modifier.height(10.dp))
+
                         TextEdit(
                             value = bookState.description,
                             label = "Описание",
@@ -190,11 +201,12 @@ fun DetailsBookScreen(
                         Spacer(modifier = Modifier.height(10.dp))
 
                         TextEdit(
-                            value = bookState.genre,
-                            label = "Жанр",
-                            placeholder = "Введите жанр книги",
-                            onValueChanged = { viewModel.updateState(bookState.copy(genre = it)) }
+                            value = bookState.publication,
+                            label = "Издание",
+                            placeholder = "Введите информацию об издании",
+                            onValueChanged = { viewModel.updateState(bookState.copy(publication = it)) }
                         )
+
                         Spacer(modifier = Modifier.height(16.dp))
 
                         when (resultStateUpdate) {
@@ -239,7 +251,9 @@ fun DetailsBookScreen(
                                 )
                             }
                         }
+
                         Spacer(Modifier.height(10.dp))
+
                         ButtonNavigate(
                             label = "Вернуться назад",
                             onClick = {
@@ -251,7 +265,9 @@ fun DetailsBookScreen(
                                 }
                             }
                         )
+
                         Spacer(Modifier.height(10.dp))
+
                         when (resultStateDelete) {
                             is ResultCondition.Error -> {
                                 Toast.makeText(
@@ -294,6 +310,7 @@ fun DetailsBookScreen(
                                 }
                             }
                         }
+
                         Spacer(modifier = Modifier.height(20.dp))
                     }
 

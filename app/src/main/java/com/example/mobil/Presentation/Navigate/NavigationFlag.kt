@@ -60,6 +60,12 @@ fun MainNavHost() {
                 composable(Routes.CreateBook) {
                     CreateBookScreen(navController)
                 }
+                composable(Routes.Profile) {
+                    HomeScreen(navController)
+                }
+                composable(Routes.MyList) {
+                    HomeScreen(navController)
+                }
             }
         }
     }

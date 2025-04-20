@@ -67,7 +67,7 @@ class DetailsBookViewModel(id: String) : ViewModel() {
                     title = book.title,
                     category = book.categoryId,
                     description = book.description,
-                    genre = book.genre
+                    publication = book.publication
                 )
                 _resultStateUpload.value = ResultCondition.Success("Success")
             } catch (e: AuthRestException) {
@@ -86,7 +86,7 @@ class DetailsBookViewModel(id: String) : ViewModel() {
                         set("title", _state.value.title)
                         set("category_id", _state.value.category)
                         set("description", _state.value.description)
-                        set("genre", _state.value.genre)
+                        set("publication", _state.value.publication)
                     }
                 ) {
                     filter {
@@ -139,7 +139,7 @@ class DetailsBookViewModel(id: String) : ViewModel() {
     suspend fun getUrlImage(bookName: String): String {
         return withContext(Dispatchers.IO) {
             try {
-                val url = supabase.storage.from("Book").publicUrl("${bookName}.png")
+                val url = supabase.storage.from("book").publicUrl("${bookName}.png")
                 Log.d("buck", url)
                 url
             } catch (ex: AuthRestException) {

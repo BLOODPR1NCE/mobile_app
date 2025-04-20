@@ -5,5 +5,5 @@ data class BookCondition (
     var title:String = "",
     var category:Int = -1,
     val description: String = "",
-    val genre: String = ""
+    val publication: String = ""
 )

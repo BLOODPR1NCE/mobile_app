@@ -1,7 +1,10 @@
 package com.example.mobil.Presentation.Screens.SignUp
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -58,14 +61,23 @@ fun CreateBookScreen(navController: NavHostController, createBookViewModel: Crea
     var imageUrl by remember { mutableStateOf("") }
     val bookState = createBookViewModel.state
     val resultState by createBookViewModel.resultState.collectAsState()
+    val context = LocalContext.current
+    var selectedImageUri  by remember { mutableStateOf<Uri?>(null) }
 
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
+    val imagePicker = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let { selectedImageUri = it }
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
         Spacer(modifier = Modifier.height(16.dp))
+
         Text(
             text = "Добавление книги",
             style = MaterialTheme.typography.headlineMedium,
@@ -75,7 +87,9 @@ fun CreateBookScreen(navController: NavHostController, createBookViewModel: Crea
             fontSize = 20.sp,
             fontWeight = FontWeight.W600
         )
+
         Spacer(modifier = Modifier.height(16.dp))
+
         val imageState = rememberAsyncImagePainter(
             model = ImageRequest.Builder(LocalContext.current).data(imageUrl)
                 .size(Size.ORIGINAL)
@@ -168,10 +182,10 @@ fun CreateBookScreen(navController: NavHostController, createBookViewModel: Crea
                 Spacer(modifier = Modifier.height(10.dp))
 
                 TextEdit(
-                    value = bookState.genre,
-                    label = "Жанр",
-                    placeholder = "Введите жанр книги",
-                    onValueChanged = { createBookViewModel.updateState(bookState.copy(genre = it)) }
+                    value = bookState.publication,
+                    label = "Издание",
+                    placeholder = "Введите информацию об издании",
+                    onValueChanged = { createBookViewModel.updateState(bookState.copy(publication = it)) }
                 )
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -198,5 +212,17 @@ fun CreateBookScreen(navController: NavHostController, createBookViewModel: Crea
                 }
             }
         }
+                Spacer(modifier = Modifier.height(16.dp))
+                ButtonNavigate(
+                    label = "Вернуться назад",
+                    onClick = {
+                        navController.navigate(Routes.Home)
+                        {
+                            popUpTo(Routes.CreateBook) {
+                                inclusive = true
+                            }
+                        }
+                    }
+                )
     }
 }

@@ -1,7 +1,10 @@
 package com.example.mobil.Presentation.Screens.SignUp
 
+import android.annotation.SuppressLint
+import android.net.Uri
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,9 +23,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.IOException
 import java.util.UUID
 
 class CreateBookViewModel: ViewModel() {
+
 
     private val _uiState = mutableStateOf(BookCondition())
     val uiState: BookCondition get() = _uiState.value
@@ -55,7 +60,7 @@ class CreateBookViewModel: ViewModel() {
                     title = _state.value.title,
                     categoryId = _state.value.category,
                     description = _state.value.description,
-                    genre = _state.value.genre
+                    publication = _state.value.publication
                 )
                 supabase.postgrest.from("Book").insert(newBook)
                 _resultState.value = ResultCondition.Success("Success")
@@ -92,5 +97,4 @@ class CreateBookViewModel: ViewModel() {
             }
         }
     }
-
 }

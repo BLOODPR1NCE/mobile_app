@@ -7,4 +7,6 @@ object Routes {
     const val Home = "home"
     const val DetailsBook ="detailsbook"
     const val CreateBook = "createbook"
+    const val Profile = "profile"
+    const val MyList = "mylist"
 }
